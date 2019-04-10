@@ -12,17 +12,37 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
         $faker = Faker::create();
+        // $this->call(UsersTableSeeder::class);
+        foreach (range(1,10) as $index) {
+            DB::table('dosen')->insert([
+                'nip' => $index,
+                'namadosen' => $faker->name,
+                
+
+            ]);
+        }
+
+        DB::table('mengajar')->insert([
+            'nipdosen' => '1',
+            'matakuliah_id' => '1'
+        ]);
+        
     	foreach (range(1,10) as $index) {
-            // DB::table('mhs')->insert([
-            //     'nrp' => str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT),
-            //     'nama' => $faker->name,
-            //     'nipdosenwali' => rand(1,10)
-            // ]);
+            DB::table('mhs')->insert([
+                'nrp' => $index,
+                'nama' => $faker->name,
+                'nipdosenwali' => rand(1,10)
+            ]);
             DB::table('matakuliah')->insert([
                 'nama' => str_random(10)
             ]);
+
+            DB::table('mengambil')->insert([
+                'nrp_mhs' => $index,
+                'matakuliah_id' => '1'
+            ]);
+
         }
     }
 }
